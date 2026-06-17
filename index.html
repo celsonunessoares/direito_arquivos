@@ -2902,68 +2902,92 @@
 
         window.saveMaterial = async (e) => {
             e.preventDefault();
-            const user = await ensureAuth();
-            if (!user && firebaseAvailable) { showToast('Falha na autenticação com o servidor.', 'error'); return; }
 
             const file = document.getElementById('mat-file').files[0];
-            if (!file) { showToast('Selecione um arquivo para upload.', 'warning'); return; }
+
+            if (!file) {
+                showToast('Selecione um arquivo para upload.', 'warning');
+                return;
+            }
 
             const uploadBtn = document.getElementById('btn-upload');
             const progressWrap = document.getElementById('upload-bar-wrap');
             const progressBar = document.getElementById('upload-bar');
 
             uploadBtn.disabled = true;
+
             if (progressWrap) progressWrap.style.display = 'block';
+            if (progressBar) progressBar.style.width = '0%';
 
             try {
+                const user = await ensureAuth();
+
+                if (firebaseAvailable && !user) {
+                    throw new Error('Falha na autenticação com o Firebase.');
+                }
+
                 let formType = 'doc';
-                if (/\.pdf$/i.test(file.name)) formType = 'pdf';
-                else if (/\.(ppt|pptx)$/i.test(file.name)) formType = 'slide';
-                else if (/\.(mp4|mp3|avi|mov|webm)$/i.test(file.name)) formType = 'media';
 
-                let url = "";
-                let storagePath = "";
-                let online = false;
+                if (/\.pdf$/i.test(file.name)) {
+                    formType = 'pdf';
+                } else if (/\.(ppt|pptx)$/i.test(file.name)) {
+                    formType = 'slide';
+                } else if (/\.(mp4|mp3|avi|mov|webm)$/i.test(file.name)) {
+                    formType = 'media';
+                }
 
-                // Tenta o Firebase Storage primeiro
-                if (firebaseAvailable && storage) {
+                let url = '';
+                let storagePath = '';
+                let savedInCloud = false;
+
+                // Upload para o Firebase Storage
+                if (firebaseAvailable && storage && user) {
                     try {
-                        storagePath = `materials/${Date.now()}_${file.name}`;
+                        storagePath = `materials/${user.uid}/${Date.now()}_${file.name}`;
+
                         const fileRef = ref(storage, storagePath);
                         const uploadTask = uploadBytesResumable(fileRef, file);
 
                         await new Promise((resolve, reject) => {
-                            uploadTask.on('state_changed',
+                            uploadTask.on(
+                                'state_changed',
                                 (snapshot) => {
                                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                    if (progressBar) progressBar.style.width = `${progress}%`;
+                                    if (progressBar) {
+                                        progressBar.style.width = `${progress}%`;
+                                    }
                                 },
-                                (err) => {
-                                    console.error("Storage upload failed:", err);
-                                    reject(err);
-                                },
-                                () => {
-                                    resolve();
+                                (error) => reject(error),
+                                async () => {
+                                    try {
+                                        url = await getDownloadURL(uploadTask.snapshot.ref);
+                                        resolve();
+                                    } catch (error) {
+                                        reject(error);
+                                    }
                                 }
                             );
                         });
 
-                        url = await getDownloadURL(fileRef);
-                        online = true;
-                    } catch(err) {
-                        console.warn("Storage falhou ou não autorizado. Ativando fallback resiliente...", err);
+                        savedInCloud = true;
+
+                    } catch (storageError) {
+                        console.error('Erro no Firebase Storage:', storageError);
                     }
                 }
 
-                // Se falhar o upload do Storage ou estiver offline, usamos fallback resiliente limitado a 700KB
-                if (!url) {
-                    if (file.size < 700 * 1024) { // Limite seguro para não estourar o limite de 1MB do Firestore (Base64 acrescenta ~33% de tamanho)
-                        showToast('Firebase Storage indisponível. Salvando arquivo compactado no banco de dados...', 'warning');
-                        url = await toBase64(file);
-                        online = true;
-                    } else {
-                        throw new Error('O arquivo é maior do que 700 KB e o Firebase Storage não está disponível ou configurado corretamente.');
+                // Fallback para Firestore em Base64
+                if (!savedInCloud) {
+                    const MAX_BASE64_SIZE = 700 * 1024;
+
+                    if (file.size > MAX_BASE64_SIZE) {
+                        throw new Error('O arquivo é muito grande para o modo offline. Verifique o Firebase Storage.');
                     }
+
+                    showToast('Storage indisponível. Salvando arquivo compactado.', 'warning');
+
+                    url = await toBase64(file);
+                    savedInCloud = !!(firebaseAvailable && db);
                 }
 
                 const data = {
@@ -2972,34 +2996,56 @@
                     form: formType,
                     data: new Date().toISOString().split('T')[0],
                     size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
-                    url: url,
-                    storagePath: storagePath,
+                    url,
+                    storagePath,
                     createdAt: Date.now()
                 };
 
-                if (db && firebaseAvailable && online) {
-                    await addDoc(getCol('materials'), data);
+                // Salvar no Firestore / Local
+                if (savedInCloud && db) {
+                    const docRef = await addDoc(getCol('materials'), data);
+
+                    window.appData.materials.unshift({
+                        id: docRef.id,
+                        ...data
+                    });
+
                     showToast('Material acadêmico publicado com sucesso!', 'success');
                 } else {
-                    window.appData.materials.push({ id: 'local-' + Date.now(), ...data });
-                    renderMaterials();
-                    renderDownloads();
-                    updateDashboard();
-                    showToast('Material salvo localmente.', 'success');
+                    window.appData.materials.unshift({
+                        id: `local-${Date.now()}`,
+                        ...data
+                    });
+
+                    showToast('Material salvo localmente.', 'info');
                 }
+
+                renderMaterials();
+                renderDownloads();
+                updateDashboard();
 
                 document.getElementById('form-material').reset();
                 closeModal('modal-material');
+
             } catch (error) {
-                console.error('Erro completo no Upload:', error);
+                console.error('Erro no upload:', error);
+
                 if (error.code) {
-                    console.error('Código do erro Firebase:', error.code);
+                    console.error('Código do erro:', error.code);
                 }
+
                 showToast(error.message || 'Erro ao realizar upload.', 'error');
+
             } finally {
                 uploadBtn.disabled = false;
-                if (progressWrap) progressWrap.style.display = 'none';
-                if (progressBar) progressBar.style.width = '0%';
+
+                if (progressWrap) {
+                    progressWrap.style.display = 'none';
+                }
+
+                if (progressBar) {
+                    progressBar.style.width = '0%';
+                }
             }
         };
 
@@ -3200,4 +3246,3 @@
     </script>
 </body>
 
-</html>
