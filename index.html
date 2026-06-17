@@ -2783,7 +2783,7 @@
 
             const temporaryId = id || 'local-' + Date.now();
             
-            // Atualiza o estado na memória imediatamente para dar feedback visual instantâneo
+            //  =estado na memória imediatamente para dar feedback visual instantâneo
             if (id) {
                 const index = window.appData.disciplines.findIndex(d => d.id === id);
                 if (index !== -1) window.appData.disciplines[index] = { ...window.appData.disciplines[index], ...data };
@@ -2925,26 +2925,46 @@
                 let storagePath = "";
                 let online = false;
 
+                // Tenta o Firebase Storage primeiro
                 if (firebaseAvailable && storage) {
-                    storagePath = `materials/${Date.now()}_${file.name}`;
-                    const fileRef = ref(storage, storagePath);
-                    const uploadTask = uploadBytesResumable(fileRef, file);
+                    try {
+                        storagePath = `materials/${Date.now()}_${file.name}`;
+                        const fileRef = ref(storage, storagePath);
+                        const uploadTask = uploadBytesResumable(fileRef, file);
 
-                    await new Promise((resolve, reject) => {
-                        uploadTask.on('state_changed',
-                            (snapshot) => {
-                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                if (progressBar) progressBar.style.width = `${progress}%`;
-                            },
-                            reject,
-                            resolve
-                        );
-                    });
+                        await new Promise((resolve, reject) => {
+                            uploadTask.on('state_changed',
+                                (snapshot) => {
+                                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                    if (progressBar) progressBar.style.width = `${progress}%`;
+                                },
+                                (err) => {
+                                    console.error("Storage upload failed:", err);
+                                    reject(err);
+                                },
+                                () => {
+                                    resolve();
+                                }
+                            );
+                        });
 
-                    url = await getDownloadURL(fileRef);
-                    online = true;
-                } else {
-                    url = URL.createObjectURL(file);
+                        url = await getDownloadURL(fileRef);
+                        online = true;
+                    } catch(err) {
+                        console.warn("Storage falhou ou não autorizado. Ativando fallback resiliente...", err);
+                    }
+                }
+
+                // Se falhar o upload do Storage ou estiver offline, usamos fallback resiliente
+                if (!url) {
+                    if (file.size < 1.2 * 1024 * 1024) { // Menor que 1.2MB cabe no Firestore como Base64
+                        showToast('Storage inacessível. Salvando como documento comprimido na nuvem...', 'warning');
+                        url = await toBase64(file);
+                        online = true; // Salvaremos no Firestore!
+                    } else {
+                        showToast('Arquivo muito grande para salvar offline. Usando link local de sessão.', 'warning');
+                        url = URL.createObjectURL(file);
+                    }
                 }
 
                 const data = {
@@ -2958,18 +2978,19 @@
                     createdAt: Date.now()
                 };
 
-                if (db && firebaseAvailable) {
+                if (db && firebaseAvailable && online) {
                     await addDoc(getCol('materials'), data);
+                    showToast('Material acadêmico publicado com sucesso!', 'success');
                 } else {
                     window.appData.materials.push({ id: 'local-' + Date.now(), ...data });
                     renderMaterials();
                     renderDownloads();
                     updateDashboard();
+                    showToast('Material salvo localmente.', 'success');
                 }
 
                 document.getElementById('form-material').reset();
                 closeModal('modal-material');
-                showToast(online ? 'Upload acadêmico indexado com sucesso!' : 'Material adicionado localmente.', 'success');
             } catch (error) {
                 console.error(error);
                 showToast(error.message || 'Erro ao realizar upload.', 'error');
