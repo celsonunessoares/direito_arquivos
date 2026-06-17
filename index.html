@@ -1,0 +1,3182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Jurídico | Direito UNINASSAU 2026.2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           CSS CUSTOM PROPERTIES & VARIABLES
+           ========================================================================== */
+        :root {
+            --primary: #6B1029;
+            --primary-h: #841231;
+            --primary-soft: rgba(107, 16, 41, 0.07);
+            --primary-glow: rgba(107, 16, 41, 0.25);
+            --gold: #C9A84C;
+            --gold-soft: rgba(201, 168, 76, 0.12);
+
+            --bg: #F6F2ED;
+            --surface: #FFFFFF;
+            --surface-2: #FAF7F3;
+            --text: #1A1210;
+            --text-muted: #7C6C66;
+            --border: #E8DED6;
+
+            --shadow-xs: 0 1px 2px rgba(26, 18, 16, .06);
+            --shadow-sm: 0 1px 6px rgba(26, 18, 16, .08);
+            --shadow-md: 0 4px 18px rgba(26, 18, 16, .10);
+            --shadow-lg: 0 12px 40px rgba(26, 18, 16, .12);
+
+            --sidebar-w: 280px;
+            --header-h: 66px;
+            --r: 10px;
+            --r-lg: 16px;
+            --t: all .22s cubic-bezier(.4, 0, .2, 1);
+
+            --ff-display: 'Cormorant Garamond', Georgia, serif;
+            --ff-body: 'DM Sans', system-ui, sans-serif;
+        }
+
+        body.dark {
+            --primary: #8B1535;
+            --primary-h: #a61c3c;
+            --primary-soft: rgba(139, 21, 53, .13);
+            --gold: #D4AC58;
+            --bg: #0E0A09;
+            --surface: #19120F;
+            --surface-2: #221810;
+            --text: #EDE6E0;
+            --text-muted: #9A8880;
+            --border: #2E201A;
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, .35);
+            --shadow-sm: 0 1px 6px rgba(0, 0, 0, .45);
+            --shadow-md: 0 4px 18px rgba(0, 0, 0, .55);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, .65);
+        }
+
+        /* ==========================================================================
+           RESET & BASE STYLES
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--ff-body);
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background .3s, color .3s;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--ff-display);
+            color: var(--text);
+            line-height: 1.15;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-family: var(--ff-body);
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: var(--ff-body);
+        }
+
+        /* ==========================================================================
+           UTILITY CLASSES
+           ========================================================================== */
+        .btn {
+            padding: 10px 22px;
+            border-radius: var(--r);
+            font-weight: 500;
+            font-size: .875rem;
+            transition: var(--t);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-h);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-ghost {
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--border);
+        }
+
+        .btn-danger {
+            background: #b91c1c;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #991b1b;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: .8rem;
+        }
+
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .055em;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            background: var(--surface);
+            color: var(--text);
+            font-size: .875rem;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+            opacity: .65;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .badge-muted {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .badge-red {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-green {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-amber {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        body.dark .badge-red {
+            background: rgba(185, 28, 28, .2);
+            color: #fca5a5;
+        }
+
+        body.dark .badge-blue {
+            background: rgba(29, 78, 216, .2);
+            color: #93c5fd;
+        }
+
+        body.dark .badge-green {
+            background: rgba(21, 128, 61, .2);
+            color: #86efac;
+        }
+
+        body.dark .badge-amber {
+            background: rgba(180, 83, 9, .2);
+            color: #fcd34d;
+        }
+
+        /* ==========================================================================
+           SIDEBAR PANEL
+           ========================================================================== */
+        #sidebar {
+            width: var(--sidebar-w);
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 22px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--primary);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.25rem;
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-text h2 {
+            font-family: var(--ff-display);
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .brand-text span {
+            font-family: var(--ff-body);
+            font-size: .73rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 10px 6px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-label {
+            font-size: .66rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--text-muted);
+            padding: 12px 12px 5px;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: .875rem;
+            font-weight: 500;
+            transition: var(--t);
+        }
+
+        .nav-item a:hover {
+            background: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        .nav-item a.active {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-item a i {
+            width: 17px;
+            text-align: center;
+            font-size: .85rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 14px 18px;
+            border-top: 1px solid var(--border);
+            font-size: .72rem;
+            color: var(--text-muted);
+            text-align: center;
+            flex-shrink: 0;
+            background: var(--surface-2);
+        }
+
+        .user-id-badge {
+            background: var(--border);
+            color: var(--text-muted);
+            padding: 6px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-family: monospace;
+            font-size: 0.65rem;
+            word-break: break-all;
+            display: block;
+            text-align: left;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* ==========================================================================
+           ADMIN VISIBILITY UTILITIES
+           ========================================================================== */
+        .admin-only,
+        .admin-only-block,
+        .admin-only-cell {
+            display: none !important;
+        }
+
+        body.is-admin .admin-only {
+            display: inline-flex !important;
+        }
+
+        body.is-admin .admin-only-block {
+            display: block !important;
+        }
+
+        body.is-admin .admin-only-cell {
+            display: table-cell !important;
+        }
+
+        .gallery-del {
+            display: none;
+        }
+
+        body.is-admin .gallery-item:hover .gallery-del {
+            display: flex;
+        }
+
+        /* ==========================================================================
+           MAIN CONTAINER & HEADER
+           ========================================================================== */
+        #main-content {
+            flex: 1;
+            margin-left: var(--sidebar-w);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left .3s;
+        }
+
+        header {
+            height: var(--header-h);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 26px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        #menu-toggle {
+            display: none;
+            background: none;
+            color: var(--text);
+            font-size: 1.25rem;
+            padding: 7px;
+            border-radius: 8px;
+        }
+
+        #menu-toggle:hover {
+            background: var(--surface-2);
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: .8rem;
+            pointer-events: none;
+        }
+
+        .search-wrap input {
+            width: 270px;
+            padding: 8px 14px 8px 36px;
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            border-radius: 24px;
+            color: var(--text);
+            font-size: .85rem;
+            transition: var(--t);
+        }
+
+        .search-wrap input:focus {
+            outline: none;
+            border-color: var(--primary);
+            width: 310px;
+            background: var(--surface);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .h-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: none;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .95rem;
+            transition: var(--t);
+        }
+
+        .h-btn:hover {
+            background: var(--surface-2);
+            color: var(--primary);
+        }
+
+        .h-btn.danger:hover {
+            color: #b91c1c;
+        }
+
+        .admin-pill {
+            display: none;
+            padding: 4px 12px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            align-items: center;
+            gap: 6px;
+        }
+
+        body.is-admin .admin-pill {
+            display: inline-flex;
+        }
+
+        /* ==========================================================================
+           VIEWS
+           ========================================================================== */
+        .view {
+            display: none;
+            padding: 30px 26px;
+            animation: vIn .32s ease;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes vIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 26px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-header h2 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-header h2 i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            background: linear-gradient(130deg, var(--primary) 0%, #3A0615 100%);
+            border-radius: var(--r-lg);
+            padding: 46px 42px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.035'%3E%3Cpath d='M26 0l26 26-26 26L0 26z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-bg-icon {
+            position: absolute;
+            right: -20px;
+            bottom: -55px;
+            font-size: 16rem;
+            opacity: .06;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .hero h1 {
+            font-family: var(--ff-display);
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.08;
+            margin-bottom: 14px;
+            position: relative;
+            max-width: 540px;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .8);
+            font-size: .95rem;
+            max-width: 500px;
+            line-height: 1.65;
+            margin-bottom: 26px;
+            position: relative;
+        }
+
+        .hero-btns {
+            position: relative;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-solid {
+            background: #fff;
+            color: var(--primary);
+            font-weight: 700;
+            padding: 11px 24px;
+            border-radius: var(--r);
+            border: none;
+            cursor: pointer;
+            transition: var(--t);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--ff-body);
+            font-size: .88rem;
+        }
+
+        .btn-hero-solid:hover {
+            background: #f5f0f0;
+            transform: translateY(-1px);
+        }
+
+        .btn-hero-ghost {
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, .28);
+            padding: 11px 24px;
+            border-radius: var(--r);
+            cursor: pointer;
+            transition: var(--t);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--ff-body);
+            font-size: .88rem;
+            font-weight: 500;
+        }
+
+        .btn-hero-ghost:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        /* ==========================================================================
+           GRID & CARD LAYOUTS
+           ========================================================================== */
+        .home-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 22px;
+        }
+
+        .home-section-title {
+            font-family: var(--ff-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-section-title i {
+            color: var(--primary);
+            font-size: .95rem;
+        }
+
+        .notice-item {
+            border-left: 3px solid var(--primary);
+            padding: 13px 15px;
+            background: var(--surface);
+            border-radius: 0 var(--r) var(--r) 0;
+            border: 1px solid var(--border);
+            transition: var(--t);
+        }
+
+        .notice-item:hover {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notice-item+.notice-item {
+            margin-top: 9px;
+        }
+
+        .notice-meta {
+            font-size: .76rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notice-item h4 {
+            font-family: var(--ff-body);
+            font-size: .88rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .notice-item p {
+            font-size: .82rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .events-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+        }
+
+        .event-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 17px;
+            border-bottom: 1px solid var(--border);
+            transition: var(--t);
+        }
+
+        .event-row:last-child {
+            border-bottom: none;
+        }
+
+        .event-row:hover {
+            background: var(--primary-soft);
+        }
+
+        .ev-date {
+            width: 44px;
+            height: 48px;
+            background: var(--primary-soft);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(107, 16, 41, .14);
+        }
+
+        .ev-day {
+            font-family: var(--ff-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .ev-mon {
+            font-size: .62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: .04em;
+        }
+
+        .ev-info h5 {
+            font-family: var(--ff-body);
+            font-size: .84rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .ev-info span {
+            font-size: .76rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           DISCIPLINES GRID
+           ========================================================================== */
+        .grid-auto {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+            gap: 18px;
+        }
+
+        .disc-card {
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            border: 1px solid var(--border);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--t);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .disc-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .disc-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .disc-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .disc-prof {
+            font-size: .81rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .disc-ementa {
+            font-size: .85rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            flex: 1;
+            margin-bottom: 18px;
+        }
+
+        .disc-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        /* ==========================================================================
+           TABLES
+           ========================================================================== */
+        .table-wrap {
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .table-wrap.no-br {
+            border-radius: 0;
+            border: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead tr {
+            background: var(--surface-2);
+        }
+
+        th {
+            padding: 14px 18px;
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 18px;
+            font-size: .875rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--primary-soft);
+        }
+
+        .empty-row td {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 44px 20px;
+            font-size: .88rem;
+        }
+
+        .empty-row i {
+            display: block;
+            font-size: 2rem;
+            color: var(--border);
+            margin-bottom: 12px;
+        }
+
+        /* ==========================================================================
+           MATERIAL & LIBRARY CARDS
+           ========================================================================== */
+        .mat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: var(--t);
+        }
+
+        .mat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .mat-icon {
+            font-size: 2.7rem;
+            margin-bottom: 14px;
+        }
+
+        .mat-card h4 {
+            font-family: var(--ff-body);
+            font-size: .92rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .mat-disc {
+            font-size: .77rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .mat-meta {
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .mat-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .lib-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 28px 20px;
+            text-align: center;
+            transition: var(--t);
+        }
+
+        .lib-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .lib-icon {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .lib-card h3 {
+            font-family: var(--ff-body);
+            font-size: .9rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        /* ==========================================================================
+           GALLERY GRID
+           ========================================================================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .gallery-item {
+            border-radius: var(--r);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            position: relative;
+            background: var(--surface-2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s ease;
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .72) 0%, transparent 55%);
+            opacity: 0;
+            transition: opacity .28s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 13px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-cap {
+            color: #fff;
+            font-size: .82rem;
+            font-weight: 500;
+        }
+
+        .gallery-del {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            background: rgba(185, 28, 28, .9);
+            color: #fff;
+            border-radius: 7px;
+            align-items: center;
+            justify-content: center;
+            font-size: .72rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--t);
+        }
+
+        .gallery-del:hover {
+            background: #b91c1c;
+            transform: scale(1.1);
+        }
+
+        /* ==========================================================================
+           NOTICES & AVISOS CARDS
+           ========================================================================== */
+        .aviso-card {
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--t);
+        }
+
+        .aviso-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary);
+        }
+
+        .aviso-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .aviso-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .aviso-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .aviso-date-text {
+            font-size: .77rem;
+            color: var(--text-muted);
+        }
+
+        .aviso-card h3 {
+            font-family: var(--ff-body);
+            font-size: .95rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .aviso-card p {
+            color: var(--text-muted);
+            line-height: 1.55;
+            font-size: .875rem;
+        }
+
+        /* ==========================================================================
+           ADMIN STATUS PANEL
+           ========================================================================== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: var(--t);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .stat-ico {
+            width: 48px;
+            height: 48px;
+            border-radius: 11px;
+            background: var(--primary-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .stat-info h3 {
+            font-family: var(--ff-display);
+            font-size: 1.85rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-info p {
+            font-size: .78rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .security-note {
+            background: var(--gold-soft);
+            border: 1px solid rgba(201, 168, 76, .28);
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: .82rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .security-note strong {
+            color: var(--gold);
+        }
+
+        .upload-bar-wrap {
+            display: none;
+            height: 4px;
+            background: var(--border);
+            border-radius: 10px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .upload-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: width .25s;
+        }
+
+        /* ==========================================================================
+           MODALS & FLOATING DIALOGS
+           ========================================================================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .42);
+            z-index: 1500;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: mFade .22s ease;
+        }
+
+        @keyframes mFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            padding: 26px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            animation: mUp .28s cubic-bezier(.34, 1.56, .64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes mUp {
+            from {
+                transform: translateY(18px) scale(.97);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-head h3 {
+            font-family: var(--ff-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            background: var(--surface-2);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--t);
+            font-size: 1rem;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .dialog-box {
+            max-width: 410px;
+            text-align: center;
+            padding: 36px 28px;
+        }
+
+        .dialog-ico {
+            font-size: 2.6rem;
+            margin-bottom: 14px;
+        }
+
+        .dialog-ico.is-confirm {
+            color: var(--primary);
+        }
+
+        .dialog-ico.is-alert {
+            color: #b45309;
+        }
+
+        .dialog-box h3 {
+            font-family: var(--ff-display);
+            font-size: 1.45rem;
+            margin-bottom: 9px;
+        }
+
+        .dialog-box p {
+            color: var(--text-muted);
+            font-size: .9rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .dialog-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* ==========================================================================
+           TOAST NOTIFICATIONS
+           ========================================================================== */
+        #toast-container {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            max-width: 340px;
+        }
+
+        .toast {
+            background: var(--surface);
+            color: var(--text);
+            padding: 13px 17px;
+            border-radius: var(--r);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: .85rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateX(24px);
+            transition: opacity .28s, transform .28s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast i {
+            flex-shrink: 0;
+        }
+
+        .toast-success {
+            border-left-color: #15803d;
+        }
+
+        .toast-success i {
+            color: #15803d;
+        }
+
+        .toast-error {
+            border-left-color: #b91c1c;
+        }
+
+        .toast-error i {
+            color: #b91c1c;
+        }
+
+        .toast-warning {
+            border-left-color: #b45309;
+        }
+
+        .toast-warning i {
+            color: #b45309;
+        }
+
+        .toast-info i {
+            color: var(--primary);
+        }
+
+        /* ==========================================================================
+           LIGHTBOX WINDOW
+           ========================================================================== */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .92);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #lightbox.open {
+            display: flex;
+        }
+
+        #lightbox img {
+            max-width: 90vw;
+            max-height: 75vh;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .8);
+        }
+
+        #lb-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--t);
+        }
+
+        #lb-close:hover {
+            background: rgba(255, 255, 255, .2);
+        }
+
+        #lb-caption {
+            color: rgba(255, 255, 255, .8);
+            margin-top: 15px;
+            font-size: .95rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 52px 20px;
+            grid-column: 1/-1;
+        }
+
+        .empty-state i {
+            font-size: 2.8rem;
+            color: var(--border);
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: .88rem;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar .form-control {
+            width: auto;
+            min-width: 210px;
+        }
+
+        .lib-search {
+            position: relative;
+        }
+
+        .lib-search i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: .8rem;
+            pointer-events: none;
+        }
+
+        .lib-search .form-control {
+            padding-left: 38px;
+            width: 320px;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE DESIGN SYSTEM
+           ========================================================================== */
+        @media (max-width: 992px) {
+            #sidebar {
+                transform: translateX(-100%);
+                box-shadow: var(--shadow-lg);
+            }
+
+            #sidebar.open {
+                transform: translateX(0);
+            }
+
+            #main-content {
+                margin-left: 0;
+            }
+
+            #menu-toggle {
+                display: block;
+            }
+
+            .search-wrap {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .view {
+                padding: 18px 14px;
+            }
+
+            .hero {
+                padding: 30px 22px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-auto {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .lib-search .form-control {
+                width: 100%;
+            }
+        }
+
+        @media print {
+
+            #sidebar,
+            header,
+            .admin-only,
+            .page-actions,
+            #toast-container {
+                display: none !important;
+            }
+
+            #main-content {
+                margin: 0;
+                width: 100%;
+            }
+
+            .view {
+                display: none;
+            }
+
+            .view.active {
+                display: block;
+            }
+
+            body {
+                background: #fff;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================================================
+         SIDEBAR NAVIGATION
+         ========================================================================== -->
+    <nav id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">
+                <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <div class="brand-text">
+                <h2>Direito UNINASSAU</h2>
+                <span>Semestre 2026.2</span>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <p class="nav-label">Principal</p>
+            <div class="nav-item"><a href="#" onclick="navigate('home')" class="active" data-target="home"><i
+                        class="fa-solid fa-house"></i> Início</a></div>
+            <div class="nav-item"><a href="#" onclick="navigate('calendar')" data-target="calendar"><i
+                        class="fa-regular fa-calendar-days"></i> Calendário</a></div>
+            <div class="nav-item"><a href="#" onclick="navigate('disciplines')" data-target="disciplines"><i
+                        class="fa-solid fa-book-open"></i> Disciplinas</a></div>
+
+            <p class="nav-label">Materiais</p>
+            <div class="nav-item"><a href="#" onclick="navigate('materials')" data-target="materials"><i
+                        class="fa-solid fa-folder-open"></i> Materiais de Aula</a></div>
+            <div class="nav-item"><a href="#" onclick="navigate('downloads')" data-target="downloads"><i
+                        class="fa-solid fa-download"></i> Downloads</a></div>
+            <div class="nav-item"><a href="#" onclick="navigate('library')" data-target="library"><i
+                        class="fa-solid fa-book-scale"></i> Biblioteca Jurídica</a></div>
+
+            <p class="nav-label">Comunicação</p>
+            <div class="nav-item"><a href="#" onclick="navigate('notices')" data-target="notices"><i
+                        class="fa-solid fa-bell"></i> Mural de Avisos</a></div>
+            <div class="nav-item"><a href="#" onclick="navigate('gallery')" data-target="gallery"><i
+                        class="fa-solid fa-images"></i> Galeria</a></div>
+
+            <div class="admin-only-block">
+                <p class="nav-label" style="color:var(--primary)">Administração</p>
+                <div class="nav-item"><a href="#" onclick="navigate('admin')" data-target="admin"
+                        style="color:var(--primary)"><i class="fa-solid fa-gear"></i> Painel Admin</a></div>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div>© 2026 Portal UNINASSAU</div>
+            <div class="user-id-badge" id="sidebar-user-id">Carregando ID de Acesso...</div>
+        </div>
+    </nav>
+
+    <!-- ==========================================================================
+         MAIN CONTENT REGION
+         ========================================================================== -->
+    <main id="main-content">
+        <header>
+            <div style="display:flex;align-items:center;gap:13px;">
+                <button id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                <div class="search-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search" placeholder="Pesquisar no portal…">
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="admin-pill"><i class="fa-solid fa-shield-halved"></i> Admin</span>
+                <button class="h-btn" id="theme-btn" onclick="toggleDarkMode()" title="Alternar tema"><i
+                        class="fa-solid fa-moon"></i></button>
+                <button class="h-btn" id="btn-login" onclick="openAdminLogin()" title="Acesso admin"><i
+                        class="fa-solid fa-user-shield"></i></button>
+                <button class="h-btn danger admin-only" onclick="logoutAdmin()" title="Sair"><i
+                        class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </header>
+
+        <!-- === HOME VIEW === -->
+        <section id="view-home" class="view active">
+            <div class="hero">
+                <p class="hero-eyebrow">Portal Acadêmico 2026.2</p>
+                <h1>Bem-vindo ao Semestre</h1>
+                <p>Acesse disciplinas, materiais, calendário e avisos do Curso de Direito — tudo sincronizado e seguro
+                    em nuvem.</p>
+                <div class="hero-btns">
+                    <button class="btn-hero-solid" onclick="navigate('disciplines')"><i
+                            class="fa-solid fa-book-open"></i> Ver Disciplinas</button>
+                    <button class="btn-hero-ghost" onclick="navigate('calendar')"><i
+                            class="fa-regular fa-calendar-days"></i> Calendário</button>
+                </div>
+                <i class="fa-solid fa-scale-balanced hero-bg-icon"></i>
+            </div>
+
+            <div class="home-grid">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                        <h3 class="home-section-title" style="margin-bottom:0"><i class="fa-solid fa-bullhorn"></i>
+                            Últimos Avisos</h3>
+                        <button class="btn btn-sm btn-ghost" onclick="navigate('notices')">Ver todos</button>
+                    </div>
+                    <div id="home-notices-container"></div>
+                </div>
+                <div>
+                    <h3 class="home-section-title"><i class="fa-regular fa-calendar-check"></i> Próximos Eventos</h3>
+                    <div class="events-card">
+                        <ul id="home-events-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === CALENDAR VIEW === -->
+        <section id="view-calendar" class="view">
+            <div class="page-header">
+                <h2><i class="fa-regular fa-calendar-days"></i> Calendário Acadêmico</h2>
+                <div class="page-actions">
+                    <button class="btn btn-ghost" onclick="window.print()"><i class="fa-solid fa-print"></i>
+                        Imprimir</button>
+                    <button class="btn btn-primary admin-only" onclick="openModal('modal-event')"><i
+                            class="fa-solid fa-plus"></i> Novo Evento</button>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table id="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Evento</th>
+                            <th>Horário</th>
+                            <th>Local</th>
+                            <th class="admin-only-cell">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- === DISCIPLINES VIEW === -->
+        <section id="view-disciplines" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-book-open"></i> Disciplinas do Semestre</h2>
+                <div class="page-actions">
+                    <button class="btn btn-primary admin-only" onclick="openNewDisciplineModal()"><i
+                            class="fa-solid fa-plus"></i> Nova Disciplina</button>
+                </div>
+            </div>
+            <div class="grid-auto" id="disciplines-container"></div>
+        </section>
+
+        <!-- === MATERIALS VIEW === -->
+        <section id="view-materials" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-folder-open"></i> Materiais de Aula</h2>
+                <div class="page-actions">
+                    <button class="btn btn-primary admin-only" onclick="openModal('modal-material')"><i
+                            class="fa-solid fa-upload"></i> Novo Material</button>
+                </div>
+            </div>
+            <div class="filter-bar">
+                <select class="form-control" id="filter-disc-material" onchange="renderMaterials()">
+                    <option value="all">Todas as Disciplinas</option>
+                </select>
+            </div>
+            <div class="grid-auto" id="materials-container"></div>
+        </section>
+
+        <!-- === DOWNLOADS VIEW === -->
+        <section id="view-downloads" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-download"></i> Central de Downloads</h2>
+                <div class="filter-bar" style="margin-bottom:0">
+                    <select class="form-control" id="filter-type-download" onchange="renderDownloads()">
+                        <option value="all">Todos os Formatos</option>
+                        <option value="pdf">PDF</option>
+                        <option value="doc">Documentos</option>
+                        <option value="slide">Slides</option>
+                        <option value="media">Vídeo / Áudio</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-wrap" style="margin-top:20px">
+                <table id="downloads-table">
+                    <thead>
+                        <tr>
+                            <th>Arquivo</th>
+                            <th>Disciplina</th>
+                            <th>Formato</th>
+                            <th>Data</th>
+                            <th>Tamanho</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- === LIBRARY VIEW === -->
+        <section id="view-library" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-book-scale"></i> Biblioteca Jurídica</h2>
+                <div class="lib-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="form-control" id="library-search" placeholder="Buscar lei, código…"
+                        onkeyup="filterLibrary()">
+                </div>
+            </div>
+            <div class="grid-auto" id="library-container"></div>
+        </section>
+
+        <!-- === NOTICES VIEW === -->
+        <section id="view-notices" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-bell"></i> Mural de Avisos</h2>
+                <div class="page-actions">
+                    <button class="btn btn-primary admin-only" onclick="openModal('modal-notice')"><i
+                            class="fa-solid fa-plus"></i> Novo Aviso</button>
+                </div>
+            </div>
+            <div class="grid-auto" id="notices-container"></div>
+        </section>
+
+        <!-- === GALLERY VIEW === -->
+        <section id="view-gallery" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-images"></i> Galeria de Fotos</h2>
+                <div class="page-actions">
+                    <button class="btn btn-primary admin-only" onclick="openModal('modal-gallery')"><i
+                            class="fa-solid fa-upload"></i> Adicionar Foto</button>
+                </div>
+            </div>
+            <div class="gallery-grid" id="gallery-container"></div>
+        </section>
+
+        <!-- === ADMIN PANEL === -->
+        <section id="view-admin" class="view">
+            <div class="page-header">
+                <h2><i class="fa-solid fa-chart-pie"></i> Painel Administrativo</h2>
+                <div class="page-actions">
+                    <button class="btn btn-danger" onclick="resetSystem()"><i
+                            class="fa-solid fa-triangle-exclamation"></i> Limpar Dados Locais</button>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-ico"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-disc">0</h3>
+                        <p>Disciplinas</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-ico"><i class="fa-solid fa-file-pdf"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-mat">0</h3>
+                        <p>Materiais</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-ico"><i class="fa-regular fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-evt">0</h3>
+                        <p>Eventos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-ico"><i class="fa-solid fa-download"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-down">0</h3>
+                        <p>Downloads</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:22px;align-items:start;flex-wrap:wrap;">
+                <div
+                    style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;border-top:3px solid var(--primary);">
+                    <div
+                        style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--border);">
+                        <h3 style="font-family:var(--ff-display);font-size:1.25rem;"><i
+                                class="fa-solid fa-graduation-cap"
+                                style="color:var(--primary);margin-right:8px;"></i>Gerenciar Disciplinas</h3>
+                        <button class="btn btn-sm btn-primary" onclick="openNewDisciplineModal()"><i
+                                class="fa-solid fa-plus"></i> Nova</button>
+                    </div>
+                    <div class="table-wrap no-br">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Professor(a)</th>
+                                    <th>C.H.</th>
+                                    <th style="width:90px">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-disciplines-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div
+                    style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;border-top:3px solid var(--gold);">
+                    <h3 style="font-family:var(--ff-display);font-size:1.25rem;margin-bottom:6px;"><i
+                            class="fa-solid fa-key" style="color:var(--gold);margin-right:8px;"></i>Segurança</h3>
+                    <div class="security-note" style="margin-top:10px;">Senha padrão: <strong>admin123</strong>. Altere
+                        imediatamente se necessário.</div>
+                    <form id="form-change-password" onsubmit="saveNewPassword(event)">
+                        <div class="form-group">
+                            <label class="form-label">Nova Senha</label>
+                            <input type="password" id="new-admin-pwd" class="form-control" required
+                                placeholder="Mínimo 4 caracteres">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirmar Senha</label>
+                            <input type="password" id="new-admin-pwd-confirm" class="form-control" required
+                                placeholder="Repita a senha">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><i
+                                class="fa-solid fa-lock"></i> Atualizar Senha</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+         MODALS & DIALOG BOXES SYSTEM
+         ========================================================================== -->
+
+    <!-- Login Admin -->
+    <div class="modal-overlay" id="modal-login">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>Acesso Restrito</h3>
+                <button class="modal-close" onclick="closeModal('modal-login')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p style="font-size:.875rem;color:var(--text-muted);margin-bottom:18px;">Área destinada a professores e
+                coordenação acadêmica para gerenciamento de materiais e avisos.</p>
+            <div class="form-group">
+                <label class="form-label">Senha Administrativa</label>
+                <input type="password" id="admin-pwd" class="form-control" placeholder="••••••••"
+                    onkeydown="if(event.key==='Enter')verifyLogin()">
+            </div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="verifyLogin()"><i
+                    class="fa-solid fa-unlock"></i> Entrar</button>
+        </div>
+    </div>
+
+    <!-- Novo Evento -->
+    <div class="modal-overlay" id="modal-event">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>Adicionar Evento</h3>
+                <button class="modal-close" onclick="closeModal('modal-event')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-event" onsubmit="saveEvent(event)">
+                <div class="form-group"><label class="form-label">Data</label><input type="date" id="ev-data"
+                        class="form-control" required></div>
+                <div class="form-group"><label class="form-label">Nome do Evento</label><input type="text" id="ev-nome"
+                        class="form-control" required placeholder="Ex: Semana Jurídica"></div>
+                <div class="form-group"><label class="form-label">Horário</label><input type="text" id="ev-hora"
+                        class="form-control" required placeholder="Ex: 19:00"></div>
+                <div class="form-group"><label class="form-label">Local</label><input type="text" id="ev-local"
+                        class="form-control" required placeholder="Ex: Auditório Principal"></div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fa-solid fa-floppy-disk"></i> Salvar Evento</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Novo Aviso -->
+    <div class="modal-overlay" id="modal-notice">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>Publicar Aviso</h3>
+                <button class="modal-close" onclick="closeModal('modal-notice')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-notice" onsubmit="saveNotice(event)">
+                <div class="form-group"><label class="form-label">Título</label><input type="text" id="not-titulo"
+                        class="form-control" required placeholder="Ex: Alteração de Sala"></div>
+                <div class="form-group">
+                    <label class="form-label">Tipo</label>
+                    <select id="not-tipo" class="form-control">
+                        <option>Urgente</option>
+                        <option>Informativo</option>
+                        <option>Evento</option>
+                        <option>Acadêmico</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">Conteúdo</label><textarea id="not-desc"
+                        class="form-control" rows="4" required placeholder="Detalhes do aviso..."></textarea></div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fa-solid fa-paper-plane"></i> Publicar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Material -->
+    <div class="modal-overlay" id="modal-material">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>Upload de Material</h3>
+                <button class="modal-close" onclick="closeModal('modal-material')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-material" onsubmit="saveMaterial(event)">
+                <div class="form-group"><label class="form-label">Disciplina</label><select id="mat-disc"
+                        class="form-control" required></select></div>
+                <div class="form-group"><label class="form-label">Nome do Material</label><input type="text"
+                        id="mat-nome" class="form-control" required placeholder="Ex: Slides Aula 01"></div>
+                <div class="form-group"><label class="form-label">Arquivo (Máx. 1MB)</label><input type="file"
+                        id="mat-file" class="form-control" required></div>
+                <div class="upload-bar-wrap" id="upload-bar-wrap">
+                    <div class="upload-bar" id="upload-bar"></div>
+                </div>
+                <p style="font-size:.76rem;color:var(--text-muted);margin-bottom:16px;margin-top:-8px;">Os arquivos são
+                    sincronizados com o banco de dados em tempo real.</p>
+                <button type="submit" id="btn-upload" class="btn btn-primary"
+                    style="width:100%;justify-content:center;"><i class="fa-solid fa-cloud-arrow-up"></i> Fazer
+                    Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Adicionar Foto Galeria -->
+    <div class="modal-overlay" id="modal-gallery">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3>Adicionar à Galeria</h3>
+                <button class="modal-close" onclick="closeModal('modal-gallery')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-gallery" onsubmit="saveGallery(event)">
+                <div class="form-group"><label class="form-label">Selecione a Imagem (Ou cole URL)</label><input
+                        type="file" id="gal-file" class="form-control" accept="image/*"></div>
+                <div style="text-align:center;margin-bottom:12px;font-size:0.8rem;color:var(--text-muted)">- OU INSIRA
+                    LINK DIRETAMENTE -</div>
+                <div class="form-group"><label class="form-label">URL da Imagem</label><input type="url" id="gal-url"
+                        class="form-control" placeholder="https://picsum.photos/400/300"></div>
+                <div class="form-group"><label class="form-label">Legenda / Evento</label><input type="text"
+                        id="gal-cap" class="form-control" required placeholder="Ex: Visita ao STJ"></div>
+                <button type="submit" id="btn-upload-gallery" class="btn btn-primary"
+                    style="width:100%;justify-content:center;"><i class="fa-solid fa-images"></i> Adicionar
+                    Imagem</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CRUD Disciplina -->
+    <div class="modal-overlay" id="modal-discipline">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3 id="disc-modal-title">Adicionar Disciplina</h3>
+                <button class="modal-close" onclick="closeModal('modal-discipline')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-discipline" onsubmit="saveDiscipline(event)">
+                <input type="hidden" id="disc-id">
+                <div class="form-group"><label class="form-label">Nome da Disciplina</label><input type="text"
+                        id="disc-nome" class="form-control" required placeholder="Ex: Direito Civil II"></div>
+                <div class="form-group"><label class="form-label">Professor(a)</label><input type="text" id="disc-prof"
+                        class="form-control" required placeholder="Ex: Prof. Dr. João Silva"></div>
+                <div class="form-group"><label class="form-label">Carga Horária</label><input type="text" id="disc-ch"
+                        class="form-control" required placeholder="Ex: 72h"></div>
+                <div class="form-group"><label class="form-label">Ementa</label><textarea id="disc-ementa"
+                        class="form-control" rows="4" required
+                        placeholder="Conteúdo programático da disciplina..."></textarea></div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fa-solid fa-floppy-disk"></i> Salvar Disciplina</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Dialog -->
+    <div class="modal-overlay" id="custom-dialog-modal">
+        <div class="modal-box dialog-box">
+            <div class="dialog-ico is-confirm" id="dialog-icon"><i class="fa-solid fa-circle-question"></i></div>
+            <h3 id="dialog-title">Confirmação</h3>
+            <p id="dialog-message"></p>
+            <div class="dialog-btns">
+                <button id="dialog-btn-cancel" class="btn btn-ghost"
+                    style="flex:1;justify-content:center;">Cancelar</button>
+                <button id="dialog-btn-confirm" class="btn btn-primary"
+                    style="flex:1;justify-content:center;">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <span id="lb-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></span>
+        <img id="lb-img" src="" alt="Foto ampliada">
+        <div id="lb-caption"></div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <!-- ==========================================================================
+         FIREBASE ECOSYSTEM MODULES & CORE SCRIPTS
+         ========================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Firebase Web Configuration Local (Fallback se __firebase_config estiver ausente)
+        const firebaseConfigLocal = {
+            apiKey: "AIzaSyBpCTwFXa2R28N6VPDLiMCvwpM7pWhq0HM",
+            authDomain: "portalaluno-62f22.firebaseapp.com",
+            projectId: "portalaluno-62f22",
+            storageBucket: "portalaluno-62f22.firebasestorage.app",
+            messagingSenderId: "538734529721",
+            appId: "1:538734529721:web:ca14af29368a769016df68",
+            measurementId: "G-27SQ9T4L9T"
+        };
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : firebaseConfigLocal;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'portal-direito-uninassau';
+
+        let app, auth, db, storage, currentUser;
+        let adminPassword = 'admin123';
+        let firebaseAvailable = false; // Controle de disponibilidade
+
+        /* ──────────────────────────────────────────────────────────────────────
+           ESTADO INTEGRADO DE DADOS ACADÊMICOS (MEMÓRIA / NUVEM)
+           ────────────────────────────────────────────────────────────────────── */
+        window.appData = {
+            downloadsCount: 0,
+            disciplines: [
+                { id: 'd1', name: 'Direito Constitucional', prof: 'Prof. Dr. João Silva', ch: '72h', ementa: 'Teoria da Constituição. Poder Constituinte. Controle de Constitucionalidade. Direitos e Garantias Fundamentais.' },
+                { id: 'd2', name: 'Introdução ao Estudo do Direito', prof: 'Profa. Dra. Maria Oliveira', ch: '60h', ementa: 'O Direito como ciência. Norma jurídica. Fontes do direito. Sistemas jurídicos. Interpretação.' },
+                { id: 'd3', name: 'Ciência Política e TGE', prof: 'Prof. Me. Carlos Mendes', ch: '60h', ementa: 'Estado: origem, elementos, formas. Sistemas de governo. Regimes políticos. Democracia e representação.' },
+                { id: 'd4', name: 'Direito Civil I', prof: 'Profa. Esp. Ana Costa', ch: '72h', ementa: 'Parte Geral do Código Civil. Pessoas naturais e jurídicas. Bens. Fatos jurídicos. Negócio jurídico.' },
+                { id: 'd5', name: 'Direito Penal I', prof: 'Prof. Dr. Roberto Almeida', ch: '72h', ementa: 'Introdução ao Direito Penal. Princípios. Aplicação da lei penal. Teoria do crime. Ilicitude e Culpabilidade.' },
+                { id: 'd6', name: 'Sociologia Jurídica', prof: 'Prof. Me. Fernando Lima', ch: '36h', ementa: 'A sociedade e o direito. Fatores sociais da produção do direito. O direito como controle social.' },
+                { id: 'd7', name: 'Metodologia Científica', prof: 'Profa. Dra. Elena Ruiz', ch: '36h', ementa: 'A ciência e o conhecimento científico. Trabalhos acadêmicos. Normas da ABNT. Projeto de pesquisa.' }
+            ],
+            library: [
+                { id: 1, nome: 'Constituição Federal (CF/88)', icon: 'fa-book', link: 'https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm' },
+                { id: 2, nome: 'Código Civil (Lei 10.406/02)', icon: 'fa-book-open', link: 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm' },
+                { id: 3, nome: 'Código Penal (Dec-Lei 2.848/40)', icon: 'fa-gavel', link: 'https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm' },
+                { id: 4, nome: 'Código de Processo Civil (CPC/15)', icon: 'fa-scale-balanced', link: 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm' },
+                { id: 5, nome: 'Código de Defesa do Consumidor', icon: 'fa-basket-shopping', link: 'https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm' },
+                { id: 6, nome: 'Vade Mecum Acadêmico 2026', icon: 'fa-book-bookmark', link: '#' }
+            ],
+            events: [],
+            notices: [],
+            materials: [],
+            gallery: []
+        };
+        window.isAdmin = false;
+
+        /* ── CONFIGURAÇÃO DE COLECÕES RÍGIDAS DE FIREBASE (RULE 1) ── */
+        const getCol = c => db ? collection(db, 'artifacts', appId, 'public', 'data', c) : null;
+        const getDoc = (c, i) => db ? doc(db, 'artifacts', appId, 'public', 'data', c, i) : null;
+        const getDocRef = getDoc;
+
+        /* ──────────────────────────────────────────────────────────────────────
+           NOTIFICAÇÕES & MODAL DIALOGS CUSTOMIZADOS
+           ────────────────────────────────────────────────────────────────────── */
+        function showToast(msg, type = 'info') {
+            const icons = { info: 'fa-circle-info', success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation' };
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span>${msg}</span>`;
+            container.appendChild(toast);
+            requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 350);
+            }, 3600);
+        }
+        window.showToast = showToast;
+
+        window.customAlert = (msg, title = 'Atenção') => new Promise(res => {
+            const d = document.getElementById('custom-dialog-modal');
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = msg;
+            const ico = document.getElementById('dialog-icon');
+            ico.className = 'dialog-ico is-alert';
+            ico.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+            document.getElementById('dialog-btn-cancel').style.display = 'none';
+            document.getElementById('dialog-btn-confirm').innerText = 'OK';
+            d.classList.add('active');
+            const btn = document.getElementById('dialog-btn-confirm');
+            const h = () => {
+                d.classList.remove('active');
+                document.getElementById('dialog-btn-cancel').style.display = '';
+                btn.removeEventListener('click', h);
+                res(true);
+            };
+            btn.addEventListener('click', h);
+        });
+
+        window.customConfirm = (msg, title = 'Confirmação') => new Promise(res => {
+            const d = document.getElementById('custom-dialog-modal');
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = msg;
+            const ico = document.getElementById('dialog-icon');
+            ico.className = 'dialog-ico is-confirm';
+            ico.innerHTML = '<i class="fa-solid fa-circle-question"></i>';
+            document.getElementById('dialog-btn-confirm').innerText = 'Confirmar';
+            document.getElementById('dialog-btn-cancel').style.display = '';
+            d.classList.add('active');
+            const ok = document.getElementById('dialog-btn-confirm');
+            const cl = document.getElementById('dialog-btn-cancel');
+            const yes = () => { d.classList.remove('active'); cleanup(); res(true); };
+            const no = () => { d.classList.remove('active'); cleanup(); res(false); };
+            const cleanup = () => { ok.removeEventListener('click', yes); cl.removeEventListener('click', no); };
+            ok.addEventListener('click', yes);
+            cl.addEventListener('click', no);
+        });
+
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        const escapeAttr = str => (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+        window.downloadRealFile = function (url, name) {
+            if (!url) { showToast('Link de download indisponível.', 'error'); return; }
+            window.appData.downloadsCount = (window.appData.downloadsCount || 0) + 1;
+            updateDashboard();
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = name || 'arquivo';
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast(`Download iniciado: ${name}`, 'success');
+        };
+
+        window.goToDiscMaterials = function (discId) {
+            navigate('materials');
+            setTimeout(() => {
+                const f = document.getElementById('filter-disc-material');
+                if (f) { f.value = discId; renderMaterials(); }
+            }, 60);
+        };
+
+        window.resetSystem = async function () {
+            const ok = await window.customConfirm('Isto irá limpar todos os arquivos, eventos, avisos e fotos locais. Deseja continuar?', 'Resetar Sistema');
+            if (!ok) return;
+            window.appData.events = [];
+            window.appData.notices = [];
+            window.appData.materials = [];
+            window.appData.gallery = [];
+            renderAllViews();
+            showToast('Dados locais limpos com sucesso.', 'warning');
+        };
+
+        const fmtIco = f => ({
+            pdf: '<i class="fa-solid fa-file-pdf" style="color:#e2574c"></i>',
+            doc: '<i class="fa-solid fa-file-word" style="color:#2b579a"></i>',
+            slide: '<i class="fa-solid fa-file-powerpoint" style="color:#d24726"></i>',
+            media: '<i class="fa-solid fa-file-video" style="color:#8f44ad"></i>'
+        }[f] || '<i class="fa-solid fa-file"></i>');
+
+        const fmtDate = s => { if (!s) return ''; const [y, m, d] = s.split('-'); return `${d}/${m}/${y}`; };
+        const MONTHS = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+
+        /* ──────────────────────────────────────────────────────────────────────
+           SISTEMA DE INICIALIZAÇÃO E TEMA
+           ────────────────────────────────────────────────────────────────────── */
+        window.onload = async () => {
+            initTheme();
+            document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+            document.getElementById('global-search').addEventListener('keypress', handleSearch);
+
+            // Fechar modais ao clicar fora (backdrop click)
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', e => {
+                    if (e.target === overlay) overlay.classList.remove('active');
+                });
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+                    closeLightbox();
+                }
+            });
+
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                try {
+                    storage = getStorage(app);
+                } catch(e) {
+                    console.warn("Storage inacessível ou não configurado.");
+                }
+
+                // Autenticação prévia obrigatória (Regra 3)
+                const user = await initAuth();
+                if (user) {
+                    document.getElementById('sidebar-user-id').innerHTML = `ID de Acesso:<br><strong>${user.uid}</strong>`;
+                    firebaseAvailable = true;
+                    initListeners();
+                } else {
+                    document.getElementById('sidebar-user-id').innerHTML = `ID de Acesso:<br><strong>Modo Offline</strong>`;
+                    firebaseAvailable = false;
+                    renderAllViews();
+                }
+            } catch (e) {
+                console.warn("Conexão com Firebase indisponível, executando localmente:", e);
+                document.getElementById('sidebar-user-id').innerHTML = `ID de Acesso:<br><strong>Modo Local</strong>`;
+                firebaseAvailable = false;
+                renderAllViews();
+            }
+        };
+
+        /* ── CONTRATO DE AUTENTICAÇÃO SEGURA (RULE 3) ── */
+        async function initAuth() {
+            if (!auth) return null;
+            if (window.isAuthenticating) return null;
+            window.isAuthenticating = true;
+            try {
+                let userCredential;
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    userCredential = await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    userCredential = await signInAnonymously(auth);
+                }
+                currentUser = auth.currentUser || userCredential.user;
+                return currentUser;
+            } catch (e) {
+                console.warn('Falha de conexão com Firebase Auth, operando localmente:', e);
+                return null;
+            } finally {
+                window.isAuthenticating = false;
+            }
+        }
+
+        async function ensureAuth() {
+            if (auth?.currentUser) { currentUser = auth.currentUser; return currentUser; }
+            return await initAuth();
+        }
+
+        async function seedDiscs() {
+            const seeds = window.appData.disciplines.map(({ id, ...d }) => ({ ...d, createdAt: Date.now() }));
+            for (const s of seeds) {
+                try { await addDoc(getCol('disciplines'), s); } catch(e) {}
+            }
+        }
+
+        /* ── CONTROLE DE REAL-TIME LISTENERS (DATABASE SYNC) ── */
+        let uEvents, uNotices, uMaterials, uGallery, uDiscs, uSettings;
+        function initListeners() {
+            if (!currentUser || !firebaseAvailable) return;
+            [uEvents, uNotices, uMaterials, uGallery, uDiscs, uSettings].forEach(u => u && u());
+
+            uSettings = onSnapshot(getDoc('settings', 'admin_config'), snap => {
+                if (snap.exists()) adminPassword = snap.data().password || 'admin123';
+                else setDoc(getDoc('settings', 'admin_config'), { password: 'admin123' }).catch(() => {});
+            }, err => console.error("Config erro:", err));
+
+            uDiscs = onSnapshot(getCol('disciplines'), async snap => {
+                if (snap.empty) { await seedDiscs(); return; }
+                window.appData.disciplines = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderDisciplines();
+                renderAdminDiscs();
+                updateSelects();
+                updateDashboard();
+            }, err => console.error("Disciplinas erro:", err));
+
+            uEvents = onSnapshot(getCol('events'), snap => {
+                window.appData.events = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderCalendar();
+                renderHome();
+                updateDashboard();
+            }, err => console.error("Eventos erro:", err));
+
+            uNotices = onSnapshot(getCol('notices'), snap => {
+                window.appData.notices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderNotices();
+                renderHome();
+            }, err => console.error("Avisos erro:", err));
+
+            uMaterials = onSnapshot(getCol('materials'), snap => {
+                window.appData.materials = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderMaterials();
+                renderDownloads();
+                updateDashboard();
+            }, err => console.error("Materiais erro:", err));
+
+            uGallery = onSnapshot(getCol('gallery'), snap => {
+                window.appData.gallery = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderGallery();
+            }, err => console.error("Galeria erro:", err));
+        }
+
+        function renderAllViews() {
+            renderHome();
+            renderCalendar();
+            renderDisciplines();
+            renderMaterials();
+            renderDownloads();
+            renderLibrary();
+            renderNotices();
+            renderGallery();
+            updateDashboard();
+        }
+
+        function updateSelects() {
+            const sel = document.getElementById('mat-disc');
+            const flt = document.getElementById('filter-disc-material');
+            if (!sel || !flt) return;
+            const ps = sel.value, pf = flt.value;
+            sel.innerHTML = '';
+            flt.innerHTML = '<option value="all">Todas as Disciplinas</option>';
+            window.appData.disciplines.forEach(d => {
+                sel.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                flt.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+            });
+            if (ps) sel.value = ps; if (pf) flt.value = pf;
+        }
+
+        /* ──────────────────────────────────────────────────────────────────────
+           SISTEMA DE NAVEGAÇÃO E UX
+           ────────────────────────────────────────────────────────────────────── */
+        window.navigate = function (id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const v = document.getElementById(`view-${id}`);
+            if (v) v.classList.add('active');
+            document.querySelectorAll('.nav-item a').forEach(a => a.classList.remove('active'));
+            const a = document.querySelector(`.nav-item a[data-target="${id}"]`);
+            if (a) a.classList.add('active');
+            if (window.innerWidth <= 992) document.getElementById('sidebar').classList.remove('open');
+            window.scrollTo(0, 0);
+        };
+
+        window.openModal = id => document.getElementById(id).classList.add('active');
+        window.closeModal = id => document.getElementById(id).classList.remove('active');
+
+        window.openLightbox = (url, cap) => {
+            document.getElementById('lb-img').src = url;
+            document.getElementById('lb-caption').innerText = cap;
+            document.getElementById('lightbox').classList.add('open');
+        };
+        window.closeLightbox = () => document.getElementById('lightbox').classList.remove('open');
+
+        window.toggleDarkMode = () => {
+            document.body.classList.toggle('dark');
+            const dark = document.body.classList.contains('dark');
+            localStorage.setItem('portal_theme', dark ? 'dark' : 'light');
+            document.getElementById('theme-btn').innerHTML = dark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            showToast(dark ? 'Modo escuro ativado.' : 'Modo claro ativado.');
+        };
+
+        function initTheme() {
+            if (localStorage.getItem('portal_theme') === 'dark') {
+                document.body.classList.add('dark');
+                document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        }
+
+        /* ──────────────────────────────────────────────────────────────────────
+           SISTEMA DE SEGURANÇA E ACESSO ADMIN
+           ────────────────────────────────────────────────────────────────────── */
+        window.openAdminLogin = () => {
+            if (window.isAdmin) { navigate('admin'); return; }
+            openModal('modal-login');
+            document.getElementById('admin-pwd').value = '';
+            setTimeout(() => document.getElementById('admin-pwd').focus(), 80);
+        };
+
+        window.verifyLogin = async () => {
+            if (document.getElementById('admin-pwd').value === adminPassword) {
+                window.isAdmin = true;
+                document.body.classList.add('is-admin');
+                closeModal('modal-login');
+                showToast('Acesso administrativo autorizado!', 'success');
+                navigate('admin');
+                renderCalendar(); renderNotices(); renderGallery(); renderMaterials();
+            } else {
+                await window.customAlert('Senha incorreta. Tente novamente.', 'Acesso Recusado');
+                document.getElementById('admin-pwd').value = '';
+                document.getElementById('admin-pwd').focus();
+            }
+        };
+
+        window.logoutAdmin = () => {
+            window.isAdmin = false;
+            document.body.classList.remove('is-admin');
+            showToast('Sessão administrativa encerrada com sucesso.');
+            navigate('home');
+        };
+
+        window.saveNewPassword = async e => {
+            e.preventDefault();
+            const user = await ensureAuth();
+            if (!user) { showToast('Sem conexão ativa de banco de dados.', 'error'); return; }
+            const np = document.getElementById('new-admin-pwd').value;
+            const cp = document.getElementById('new-admin-pwd-confirm').value;
+            if (np !== cp) { await window.customAlert('As senhas digitadas não coincidem.', 'Erro'); return; }
+            if (np.length < 4) { await window.customAlert('A senha deve possuir ao menos 4 dígitos.', 'Senha Insegura'); return; }
+            try {
+                await setDoc(getDoc('settings', 'admin_config'), { password: np });
+                document.getElementById('form-change-password').reset();
+                showToast('Senha alterada em nuvem!', 'success');
+            } catch (err) {
+                showToast('Erro ao gravar senha.', 'error');
+            }
+        };
+
+        /* ── BUSCA GLOBAL NO PORTAL ── */
+        function handleSearch(e) {
+            if (e.key !== 'Enter') return;
+            const q = this.value.toLowerCase().trim();
+            if (!q) return;
+            const d = window.appData.disciplines.find(x => x.name.toLowerCase().includes(q) || x.ementa.toLowerCase().includes(q));
+            if (d) { showToast(`Encontrado Disciplina: ${d.name}`, 'success'); navigate('disciplines'); return; }
+            const m = window.appData.materials.find(x => x.nome.toLowerCase().includes(q));
+            if (m) { showToast(`Encontrado Material: ${m.nome}`, 'success'); navigate('downloads'); renderDownloads(); return; }
+            const n = window.appData.notices.find(x => x.titulo.toLowerCase().includes(q) || x.desc.toLowerCase().includes(q));
+            if (n) { showToast(`Encontrado Aviso: ${n.titulo}`, 'success'); navigate('notices'); return; }
+            showToast('Nenhum resultado correspondente no portal.', 'warning');
+        }
+
+        /* ──────────────────────────────────────────────────────────────────────
+           RENDERS DE PÁGINAS E SEÇÕES
+           ────────────────────────────────────────────────────────────────────── */
+        function renderHome() {
+            const container = document.getElementById('home-notices-container');
+            if (!container) return;
+            const notices = [...window.appData.notices].sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 3);
+            const typeCls = { Urgente: 'badge-red', Informativo: 'badge-blue', Evento: 'badge-primary', Acadêmico: 'badge-green' };
+            container.innerHTML = notices.length === 0
+                ? '<div class="empty-state" style="padding:30px 0"><i class="fa-regular fa-bell-slash"></i><p>Nenhum aviso no mural.</p></div>'
+                : notices.map(n => `<div class="notice-item"><div class="notice-meta"><span>${fmtDate(n.data)}</span><span class="badge ${typeCls[n.tipo] || 'badge-muted'}">${n.tipo}</span></div><h4>${n.titulo}</h4><p>${n.desc.substring(0, 80)}${n.desc.length > 80 ? '…' : ''}</p></div>`).join('');
+
+            const el = document.getElementById('home-events-list');
+            if (!el) return;
+            const evs = [...window.appData.events].sort((a, b) => new Date(a.data) - new Date(b.data)).slice(0, 5);
+            el.innerHTML = evs.length === 0
+                ? '<li style="padding:28px;text-align:center;color:var(--text-muted);font-size:.85rem">Sem eventos acadêmicos programados.</li>'
+                : evs.map(ev => {
+                    const pts = fmtDate(ev.data).split('/');
+                    return `<li class="event-row"><div class="ev-date"><span class="ev-day">${pts[0] || '--'}</span><span class="ev-mon">${MONTHS[(parseInt(pts[1]) || 1) - 1] || ''}</span></div><div class="ev-info"><h5>${ev.nome}</h5><span><i class="fa-regular fa-clock"></i> ${ev.hora} &nbsp;<i class="fa-solid fa-location-dot"></i> ${ev.local}</span></div></li>`;
+                }).join('');
+        }
+
+        function renderCalendar() {
+            const tbody = document.querySelector('#calendar-table tbody');
+            if (!tbody) return;
+            const sorted = [...window.appData.events].sort((a, b) => new Date(a.data) - new Date(b.data));
+            tbody.innerHTML = sorted.length === 0
+                ? `<tr class="empty-row"><td colspan="5"><i class="fa-regular fa-calendar"></i>Calendário vazio. Adicione o primeiro evento acadêmico.</td></tr>`
+                : sorted.map(ev => `<tr><td style="font-weight:600">${fmtDate(ev.data)}</td><td>${ev.nome}</td><td>${ev.hora}</td><td>${ev.local}</td><td class="admin-only-cell"><button class="btn btn-sm btn-danger btn-icon" onclick="deleteEvent('${ev.id}')" title="Excluir"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
+        }
+
+        window.saveEvent = async e => {
+            e.preventDefault();
+            const data = { 
+                data: document.getElementById('ev-data').value, 
+                nome: document.getElementById('ev-nome').value, 
+                hora: document.getElementById('ev-hora').value, 
+                local: document.getElementById('ev-local').value 
+            };
+            
+            const tempId = 'local-' + Date.now();
+            window.appData.events.push({ id: tempId, ...data });
+            
+            renderCalendar(); 
+            renderHome(); 
+            updateDashboard();
+            closeModal('modal-event'); 
+            document.getElementById('form-event').reset();
+            showToast('Sincronizando evento...', 'info');
+
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable) {
+                    const docRef = await addDoc(getCol('events'), data);
+                    const idx = window.appData.events.findIndex(ev => ev.id === tempId);
+                    if (idx !== -1) window.appData.events[idx].id = docRef.id;
+                    showToast('Evento agendado em nuvem!', 'success');
+                } else {
+                    showToast('Evento salvo localmente.', 'info');
+                }
+            } catch(e) {
+                console.warn("Erro ao sincronizar evento:", e);
+            }
+        };
+
+        window.deleteEvent = async id => {
+            if (!await window.customConfirm('Deseja apagar permanentemente este evento acadêmico?')) return;
+            let online = false;
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable && !id.startsWith('local-')) {
+                    await deleteDoc(getDoc('events', id));
+                    online = true;
+                }
+            } catch(e) {}
+            window.appData.events = window.appData.events.filter(e => e.id !== id);
+            renderCalendar(); renderHome(); updateDashboard();
+            showToast(online ? 'Evento removido da nuvem!' : 'Evento removido localmente.', 'info');
+        };
+
+        function renderDisciplines() {
+            const container = document.getElementById('disciplines-container');
+            if (!container) return;
+            container.innerHTML = window.appData.disciplines.length === 0
+                ? '<div class="empty-state"><i class="fa-solid fa-book-open"></i><p>Nenhuma disciplina disponível.</p></div>'
+                : window.appData.disciplines.map(d => `<div class="disc-card"><h3>${d.name}</h3><div class="disc-prof"><i class="fa-solid fa-user-tie"></i>${d.prof}</div><div class="disc-ementa">${d.ementa}</div><div class="disc-footer"><span class="badge badge-muted"><i class="fa-regular fa-clock"></i> ${d.ch}</span><button class="btn btn-sm btn-outline" onclick="goToDiscMaterials('${d.id}')"><i class="fa-solid fa-folder-open"></i> Materiais</button></div></div>`).join('');
+        }
+
+        function renderAdminDiscs() {
+            const tbody = document.getElementById('admin-disciplines-table');
+            if (!tbody) return;
+            const sorted = [...window.appData.disciplines].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            tbody.innerHTML = sorted.length === 0
+                ? '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:30px">Nenhuma disciplina cadastrada.</td></tr>'
+                : sorted.map(d => `<tr><td style="font-weight:600">${d.name}</td><td style="color:var(--text-muted)">${d.prof}</td><td><span class="badge badge-muted">${d.ch}</span></td><td><div style="display:flex;gap:5px"><button class="btn btn-sm btn-primary btn-icon" onclick="editDiscipline('${d.id}')" title="Editar"><i class="fa-solid fa-pen"></i></button><button class="btn btn-sm btn-danger btn-icon" onclick="deleteDiscipline('${d.id}')" title="Excluir"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('');
+        }
+
+        window.openNewDisciplineModal = () => {
+            document.getElementById('form-discipline').reset();
+            document.getElementById('disc-id').value = '';
+            document.getElementById('disc-modal-title').innerText = 'Adicionar Disciplina';
+            openModal('modal-discipline');
+        };
+
+        window.editDiscipline = id => {
+            const d = window.appData.disciplines.find(x => x.id === id);
+            if (!d) return;
+            document.getElementById('disc-id').value = d.id;
+            document.getElementById('disc-nome').value = d.name;
+            document.getElementById('disc-prof').value = d.prof;
+            document.getElementById('disc-ch').value = d.ch;
+            document.getElementById('disc-ementa').value = d.ementa;
+            document.getElementById('disc-modal-title').innerText = 'Editar Disciplina';
+            openModal('modal-discipline');
+        };
+
+        window.saveDiscipline = async e => {
+            e.preventDefault();
+            const id = document.getElementById('disc-id').value;
+            const data = {
+                name: document.getElementById('disc-nome').value,
+                prof: document.getElementById('disc-prof').value,
+                ch: document.getElementById('disc-ch').value,
+                ementa: document.getElementById('disc-ementa').value
+            };
+
+            const temporaryId = id || 'local-' + Date.now();
+            
+            // Atualiza o estado na memória imediatamente para dar feedback visual instantâneo
+            if (id) {
+                const index = window.appData.disciplines.findIndex(d => d.id === id);
+                if (index !== -1) window.appData.disciplines[index] = { ...window.appData.disciplines[index], ...data };
+            } else {
+                window.appData.disciplines.push({
+                    id: temporaryId,
+                    ...data,
+                    createdAt: Date.now()
+                });
+            }
+
+            // Atualiza todas as visualizações na tela na mesma hora e fecha o modal
+            renderDisciplines(); 
+            renderAdminDiscs(); 
+            updateSelects(); 
+            updateDashboard();
+            closeModal('modal-discipline'); 
+            document.getElementById('form-discipline').reset();
+            showToast('Sincronizando disciplina...', 'info');
+
+            // Executa a gravação externa no Firestore em segundo plano (background thread)
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable) {
+                    if (id && !id.startsWith('local-')) {
+                        await updateDoc(getDoc('disciplines', id), data);
+                        showToast('Disciplina atualizada na nuvem!', 'success');
+                    } else {
+                        data.createdAt = Date.now();
+                        const docRef = await addDoc(getCol('disciplines'), data);
+                        
+                        // Substitui o ID local provisório pelo ID real gerado pelo banco de dados
+                        const index = window.appData.disciplines.findIndex(d => d.id === temporaryId);
+                        if (index !== -1) {
+                            window.appData.disciplines[index].id = docRef.id;
+                            renderDisciplines();
+                            renderAdminDiscs();
+                            updateSelects();
+                        }
+                        showToast('Disciplina salva na nuvem!', 'success');
+                    }
+                } else {
+                    showToast('Disciplina salva localmente.', 'info');
+                }
+            } catch(err) {
+                console.warn("Sincronização com Firestore falhou, operando no modo offline:", err);
+                showToast('Salvo offline no dispositivo.', 'info');
+            }
+        };
+
+        window.deleteDiscipline = async id => {
+            if (!await window.customConfirm('Remover esta disciplina permanentemente do banco acadêmico?')) return;
+            let online = false;
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable && !id.startsWith('local-')) {
+                    await deleteDoc(getDoc('disciplines', id));
+                    online = true;
+                }
+            } catch(err) {}
+            window.appData.disciplines = window.appData.disciplines.filter(d => d.id !== id);
+            renderDisciplines(); renderAdminDiscs(); updateSelects(); updateDashboard();
+            showToast(online ? 'Disciplina removida.' : 'Removido apenas localmente.', 'info');
+        };
+
+        /* ──────────────────────────────────────────────────────────────────────
+           SISTEMA DE ARQUIVOS (UPLOADS & DOWNLOADS)
+           ────────────────────────────────────────────────────────────────────── */
+        window.renderMaterials = function () {
+            const container = document.getElementById('materials-container');
+            if (!container) return;
+            const filterId = document.getElementById('filter-disc-material').value;
+            const items = (filterId === 'all' ? window.appData.materials : window.appData.materials.filter(m => m.discId === filterId))
+                .sort((a, b) => b.createdAt - a.createdAt);
+
+            container.innerHTML = items.length === 0
+                ? '<div class="empty-state"><i class="fa-solid fa-folder-open"></i><p>Nenhum material de aula para esta disciplina.</p></div>'
+                : items.map(m => {
+                    const disc = window.appData.disciplines.find(d => d.id === m.discId);
+                    return `<div class="mat-card">
+                        <div class="mat-icon">${fmtIco(m.form)}</div>
+                        <h4>${m.nome}</h4>
+                        <p class="mat-disc">${disc ? disc.name : 'Geral'}</p>
+                        <p class="mat-meta">${fmtDate(m.data)} &bull; ${m.size}</p>
+                        <div class="mat-actions">
+                            <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="downloadRealFile('${m.url}','${m.nome}')"><i class="fa-solid fa-download"></i> Baixar</button>
+                            <button class="btn btn-danger btn-icon admin-only" onclick="deleteMaterial('${m.id}','${m.storagePath || ''}')" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>`;
+                }).join('');
+        };
+
+        window.renderDownloads = function () {
+            const tbody = document.querySelector('#downloads-table tbody');
+            if (!tbody) return;
+            const filterType = document.getElementById('filter-type-download').value;
+            const items = (filterType === 'all' ? window.appData.materials : window.appData.materials.filter(m => m.form === filterType))
+                .sort((a, b) => b.createdAt - a.createdAt);
+
+            tbody.innerHTML = items.length === 0
+                ? `<tr class="empty-row"><td colspan="6"><i class="fa-solid fa-download"></i>Nenhum arquivo encontrado para download.</td></tr>`
+                : items.map(m => {
+                    const disc = window.appData.disciplines.find(d => d.id === m.discId);
+                    return `<tr>
+                        <td style="font-weight:600">${fmtIco(m.form)} &nbsp;${m.nome}</td>
+                        <td>${disc ? disc.name : 'Geral'}</td>
+                        <td><span class="badge badge-muted">${m.form.toUpperCase()}</span></td>
+                        <td>${fmtDate(m.data)}</td>
+                        <td>${m.size}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary btn-icon" onclick="downloadRealFile('${m.url}','${m.nome}')" title="Baixar"><i class="fa-solid fa-download"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+        };
+
+        window.saveMaterial = async (e) => {
+            e.preventDefault();
+            const user = await ensureAuth();
+            if (!user && firebaseAvailable) { showToast('Falha na autenticação com o servidor.', 'error'); return; }
+
+            const file = document.getElementById('mat-file').files[0];
+            if (!file) { showToast('Selecione um arquivo para upload.', 'warning'); return; }
+
+            const uploadBtn = document.getElementById('btn-upload');
+            const progressWrap = document.getElementById('upload-bar-wrap');
+            const progressBar = document.getElementById('upload-bar');
+
+            uploadBtn.disabled = true;
+            if (progressWrap) progressWrap.style.display = 'block';
+
+            try {
+                let formType = 'doc';
+                if (/\.pdf$/i.test(file.name)) formType = 'pdf';
+                else if (/\.(ppt|pptx)$/i.test(file.name)) formType = 'slide';
+                else if (/\.(mp4|mp3|avi|mov|webm)$/i.test(file.name)) formType = 'media';
+
+                let url = "";
+                let storagePath = "";
+                let online = false;
+
+                if (firebaseAvailable && storage) {
+                    storagePath = `materials/${Date.now()}_${file.name}`;
+                    const fileRef = ref(storage, storagePath);
+                    const uploadTask = uploadBytesResumable(fileRef, file);
+
+                    await new Promise((resolve, reject) => {
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                if (progressBar) progressBar.style.width = `${progress}%`;
+                            },
+                            reject,
+                            resolve
+                        );
+                    });
+
+                    url = await getDownloadURL(fileRef);
+                    online = true;
+                } else {
+                    url = URL.createObjectURL(file);
+                }
+
+                const data = {
+                    discId: document.getElementById('mat-disc').value,
+                    nome: document.getElementById('mat-nome').value,
+                    form: formType,
+                    data: new Date().toISOString().split('T')[0],
+                    size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
+                    url: url,
+                    storagePath: storagePath,
+                    createdAt: Date.now()
+                };
+
+                if (db && firebaseAvailable) {
+                    await addDoc(getCol('materials'), data);
+                } else {
+                    window.appData.materials.push({ id: 'local-' + Date.now(), ...data });
+                    renderMaterials();
+                    renderDownloads();
+                    updateDashboard();
+                }
+
+                document.getElementById('form-material').reset();
+                closeModal('modal-material');
+                showToast(online ? 'Upload acadêmico indexado com sucesso!' : 'Material adicionado localmente.', 'success');
+            } catch (error) {
+                console.error(error);
+                showToast(error.message || 'Erro ao realizar upload.', 'error');
+            } finally {
+                uploadBtn.disabled = false;
+                if (progressWrap) progressWrap.style.display = 'none';
+                if (progressBar) progressBar.style.width = '0%';
+            }
+        };
+
+        window.deleteMaterial = async (id, storagePath) => {
+            if (!await window.customConfirm('Deseja apagar permanentemente este material acadêmico?')) return;
+            let online = false;
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable && !id.startsWith('local-')) {
+                    await deleteDoc(getDoc('materials', id));
+                    if (storagePath && storage) {
+                        try {
+                            const fileRef = ref(storage, storagePath);
+                            await deleteObject(fileRef);
+                        } catch(e) {
+                            console.warn("Remoção física no Storage falhou:", e);
+                        }
+                    }
+                    online = true;
+                }
+            } catch(e) {
+                console.error(e);
+            }
+            window.appData.materials = window.appData.materials.filter(m => m.id !== id);
+            renderMaterials(); renderDownloads(); updateDashboard();
+            showToast(online ? 'Arquivo removido da nuvem!' : 'Removido localmente.', 'info');
+        };
+
+        /* ──────────────────────────────────────────────────────────────────────
+           BIBLIOTECA JURÍDICA
+           ────────────────────────────────────────────────────────────────────── */
+        function renderLibrary() {
+            const container = document.getElementById('library-container');
+            if (!container) return;
+            container.innerHTML = window.appData.library.map(b => `<div class="lib-card lib-item" data-title="${b.nome.toLowerCase()}"><i class="fa-solid ${b.icon} lib-icon"></i><h3>${b.nome}</h3><a href="${b.link || '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" style="width:100%;justify-content:center;" ${b.link === '#' ? 'onclick="event.preventDefault();showToast(\'Material em fase de digitalização.\')"' : ''}><i class="fa-solid fa-arrow-up-right-from-square"></i> Consultar</a></div>`).join('');
+        }
+
+        window.filterLibrary = () => {
+            const q = document.getElementById('library-search').value.toLowerCase();
+            document.querySelectorAll('.lib-item').forEach(el => {
+                el.style.display = el.dataset.title.includes(q) ? '' : 'none';
+            });
+        };
+
+        /* ──────────────────────────────────────────────────────────────────────
+           MURAL DE AVISOS
+           ────────────────────────────────────────────────────────────────────── */
+        function renderNotices() {
+            const container = document.getElementById('notices-container');
+            if (!container) return;
+            const sorted = [...window.appData.notices].sort((a, b) => new Date(b.data) - new Date(a.data));
+            const typeCls = { Urgente: 'badge-red', Informativo: 'badge-blue', Evento: 'badge-primary', Acadêmico: 'badge-green' };
+            container.innerHTML = sorted.length === 0
+                ? '<div class="empty-state"><i class="fa-regular fa-bell-slash"></i><p>Nenhum aviso ativo.</p></div>'
+                : sorted.map(n => `<div class="aviso-card"><div class="aviso-head"><div class="aviso-meta-row"><span class="aviso-date-text">${fmtDate(n.data)}</span><span class="badge ${typeCls[n.tipo] || 'badge-muted'}">${n.tipo}</span></div><button class="btn btn-sm btn-danger btn-icon admin-only" onclick="deleteNotice('${n.id}')" title="Excluir"><i class="fa-solid fa-trash"></i></button></div><h3>${n.titulo}</h3><p>${n.desc}</p></div>`).join('');
+        }
+
+        window.saveNotice = async e => {
+            e.preventDefault();
+            const data = {
+                data: new Date().toISOString().split('T')[0],
+                titulo: document.getElementById('not-titulo').value,
+                tipo: document.getElementById('not-tipo').value,
+                desc: document.getElementById('not-desc').value
+            };
+            
+            const tempId = 'local-' + Date.now();
+            window.appData.notices.push({ id: tempId, ...data });
+            
+            renderNotices(); 
+            renderHome();
+            closeModal('modal-notice'); 
+            document.getElementById('form-notice').reset();
+            showToast('Sincronizando aviso...', 'info');
+
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable) {
+                    const docRef = await addDoc(getCol('notices'), data);
+                    const idx = window.appData.notices.findIndex(n => n.id === tempId);
+                    if (idx !== -1) window.appData.notices[idx].id = docRef.id;
+                    showToast('Aviso publicado no mural acadêmico!', 'success');
+                } else {
+                    showToast('Aviso publicado localmente.', 'info');
+                }
+            } catch(err) {}
+        };
+
+        window.deleteNotice = async id => {
+            if (!await window.customConfirm('Deseja deletar permanentemente este aviso do mural?')) return;
+            let online = false;
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable && !id.startsWith('local-')) {
+                    await deleteDoc(getDoc('notices', id));
+                    online = true;
+                }
+            } catch(err) {}
+            window.appData.notices = window.appData.notices.filter(n => n.id !== id);
+            renderNotices(); renderHome();
+            showToast(online ? 'Aviso removido do mural.' : 'Removido localmente.', 'info');
+        };
+
+        /* ──────────────────────────────────────────────────────────────────────
+           GALERIA DE FOTOS
+           ────────────────────────────────────────────────────────────────────── */
+        function renderGallery() {
+            const container = document.getElementById('gallery-container');
+            if (!container) return;
+            container.innerHTML = window.appData.gallery.length === 0
+                ? '<div class="empty-state"><i class="fa-solid fa-images"></i><p>Nenhuma foto na galeria.</p></div>'
+                : window.appData.gallery.map(g => `<div class="gallery-item">
+                    <img src="${g.url}" alt="${g.cap}" onclick="openLightbox('${g.url}','${escapeAttr(g.cap)}')" loading="lazy" onerror="this.src='https://placehold.co/400x300/6B1029/white?text=Imagem'">
+                    <div class="gallery-overlay"><div class="gallery-cap">${g.cap}</div></div>
+                    <button class="gallery-del" onclick="deleteGallery(event,'${g.id}')" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                </div>`).join('');
+        }
+
+        window.saveGallery = async e => {
+            e.preventDefault();
+            const fileInput = document.getElementById('gal-file');
+            const urlInput = document.getElementById('gal-url').value.trim();
+            const caption = document.getElementById('gal-cap').value;
+            const btn = document.getElementById('btn-upload-gallery');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publicando...';
+
+            let imageUrl = urlInput || 'https://picsum.photos/400/300';
+
+            if (fileInput.files.length) {
+                const file = fileInput.files[0];
+                if (file.size > 1 * 1024 * 1024) {
+                    await window.customAlert('Para upload sem storage complementar, a imagem deve possuir até 1MB.', 'Imagem Grande');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-images"></i> Adicionar Imagem';
+                    return;
+                }
+                try {
+                    imageUrl = await toBase64(file);
+                } catch(err) {
+                    showToast('Erro de processamento de imagem física.', 'error');
+                }
+            }
+
+            const data = { url: imageUrl, cap: caption };
+            const tempId = 'local-' + Date.now();
+            window.appData.gallery.push({ id: tempId, ...data });
+
+            renderGallery();
+            closeModal('modal-gallery');
+            document.getElementById('form-gallery').reset();
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-images"></i> Adicionar Imagem';
+            showToast('Sincronizando imagem...', 'info');
+
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable) {
+                    const docRef = await addDoc(getCol('gallery'), data);
+                    const idx = window.appData.gallery.findIndex(g => g.id === tempId);
+                    if (idx !== -1) window.appData.gallery[idx].id = docRef.id;
+                    showToast('Foto publicada na galeria acadêmica!', 'success');
+                } else {
+                    showToast('Foto salva localmente.', 'info');
+                }
+            } catch(err) {
+                console.warn("Erro ao sincronizar galeria:", err);
+            }
+        };
+
+        window.deleteGallery = async (e, id) => {
+            e.stopPropagation();
+            if (!await window.customConfirm('Deseja excluir esta foto permanentemente da galeria?')) return;
+            let online = false;
+            try {
+                const u = await ensureAuth();
+                if (u && db && firebaseAvailable && !id.startsWith('local-')) {
+                    await deleteDoc(getDoc('gallery', id));
+                    online = true;
+                }
+            } catch(err) {}
+            window.appData.gallery = window.appData.gallery.filter(g => g.id !== id);
+            renderGallery();
+            showToast(online ? 'Imagem removida da galeria.' : 'Imagem deletada temporariamente.', 'info');
+        };
+
+        /* ── MEDIÇÃO DE MÉTRICAS DO PORTAL ── */
+        function updateDashboard() {
+            const dElem = document.getElementById('stat-disc');
+            const mElem = document.getElementById('stat-mat');
+            const eElem = document.getElementById('stat-evt');
+            const dwElem = document.getElementById('stat-down');
+
+            if (dElem) dElem.innerText = window.appData.disciplines.length;
+            if (mElem) mElem.innerText = window.appData.materials.length;
+            if (eElem) eElem.innerText = window.appData.events.length;
+            if (dwElem) dwElem.innerText = window.appData.downloadsCount || 0;
+        }
+    </script>
+</body>
+
+</html>
