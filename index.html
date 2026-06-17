@@ -2713,7 +2713,7 @@
                     if (idx !== -1) window.appData.events[idx].id = docRef.id;
                     showToast('Evento agendado em nuvem!', 'success');
                 } else {
-                    showToast('Evento salvo localmente.', 'info');
+                    showToast('Evento saved localmente.', 'info');
                 }
             } catch(e) {
                 console.warn("Erro ao sincronizar evento:", e);
@@ -2955,15 +2955,14 @@
                     }
                 }
 
-                // Se falhar o upload do Storage ou estiver offline, usamos fallback resiliente
+                // Se falhar o upload do Storage ou estiver offline, usamos fallback resiliente limitado a 700KB
                 if (!url) {
-                    if (file.size < 1.2 * 1024 * 1024) { // Menor que 1.2MB cabe no Firestore como Base64
-                        showToast('Storage inacessível. Salvando como documento comprimido na nuvem...', 'warning');
+                    if (file.size < 700 * 1024) { // Limite seguro para não estourar o limite de 1MB do Firestore (Base64 acrescenta ~33% de tamanho)
+                        showToast('Firebase Storage indisponível. Salvando arquivo compactado no banco de dados...', 'warning');
                         url = await toBase64(file);
-                        online = true; // Salvaremos no Firestore!
+                        online = true;
                     } else {
-                        showToast('Arquivo muito grande para salvar offline. Usando link local de sessão.', 'warning');
-                        url = URL.createObjectURL(file);
+                        throw new Error('O arquivo é maior do que 700 KB e o Firebase Storage não está disponível ou configurado corretamente.');
                     }
                 }
 
@@ -2992,7 +2991,10 @@
                 document.getElementById('form-material').reset();
                 closeModal('modal-material');
             } catch (error) {
-                console.error(error);
+                console.error('Erro completo no Upload:', error);
+                if (error.code) {
+                    console.error('Código do erro Firebase:', error.code);
+                }
                 showToast(error.message || 'Erro ao realizar upload.', 'error');
             } finally {
                 uploadBtn.disabled = false;
@@ -3101,9 +3103,7 @@
             showToast(online ? 'Aviso removido do mural.' : 'Removido localmente.', 'info');
         };
 
-        /* ──────────────────────────────────────────────────────────────────────
-           GALERIA DE FOTOS
-           ────────────────────────────────────────────────────────────────────── */
+        /* ── GALERIA DE FOTOS ── */
         function renderGallery() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
